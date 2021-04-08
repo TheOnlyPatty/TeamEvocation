@@ -16,8 +16,11 @@ public class HorizontalEnemy : MonoBehaviour
       rb = GetComponent<Rigidbody2D>();
       //rb.gravityScale = 0f;
       basePos = GetComponent<Transform>().position.x;
-      moveBy = 1f;
+      moveBy = 3f;
       moveRight = true;
+
+      //temp, change later
+      gameObject.tag = "Player";
     }
 
     // Update is called once per frame
@@ -25,12 +28,12 @@ public class HorizontalEnemy : MonoBehaviour
     {
       rb.velocity = new Vector2(moveBy, rb.velocity.y);
 
-      if(GetComponent<Transform>().position.x > (basePos + 2) && moveRight){
+      if(GetComponent<Transform>().position.x > (basePos + 5) && moveRight){
         moveBy *= -1f;
         moveRight = false;
       }
 
-      if(GetComponent<Transform>().position.x < (basePos - 2) && !moveRight){
+      if(GetComponent<Transform>().position.x < (basePos - 5) && !moveRight){
         moveBy *= -1f;
         moveRight = true;
       }
