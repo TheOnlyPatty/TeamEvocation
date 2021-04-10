@@ -19,8 +19,8 @@ public class HorizontalEnemy : MonoBehaviour
       moveBy = 3f;
       moveRight = true;
 
-      //temp, change later
-      gameObject.tag = "Player";
+      // temp, change later
+      // gameObject.tag = "Player";
     }
 
     // Update is called once per frame
@@ -36,6 +36,17 @@ public class HorizontalEnemy : MonoBehaviour
       if(GetComponent<Transform>().position.x < (basePos - 5) && !moveRight){
         moveBy *= -1f;
         moveRight = true;
+      }
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+      if(col.gameObject.tag == "Player"){
+        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+          Destroy(gameObject);
+        }else{
+          // Eventually replace this with damaging the Player
+          Destroy(col.gameObject);
+        }
       }
     }
 }
