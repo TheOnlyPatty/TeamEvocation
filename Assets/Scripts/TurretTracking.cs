@@ -26,7 +26,8 @@ public class TurretTracking : MonoBehaviour
     {
       RotateGameObject(target.position, 1f, 90f);
 
-
+      if(currentHealth == 0)
+        Destroy(gameObject);
     }
 
     private void RotateGameObject(Vector3 target, float RotationSpeed, float offset)
@@ -46,6 +47,18 @@ public class TurretTracking : MonoBehaviour
         bulletClone = Instantiate(bullet, shootPoint.transform.position, shootPoint.transform.rotation); // as GameObject;
         bulletClone.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         bulletTimer = 0;
+      }
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+      if(col.gameObject.tag == "Player"){
+        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 0){
+          //Destroy(gameObject);
+          currentHealth--;
+        }else{
+          // Eventually replace this with damaging the Player
+          Destroy(col.gameObject);
+        }
       }
     }
 }

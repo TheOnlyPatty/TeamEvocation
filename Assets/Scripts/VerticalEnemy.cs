@@ -35,4 +35,15 @@ public class VerticalEnemy : MonoBehaviour
         moveUp = true;
       }
     }
+
+    void OnCollisionEnter2D(Collision2D col){
+      if(col.gameObject.tag == "Player"){
+        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+          Destroy(gameObject);
+        }else{
+          // Eventually replace this with damaging the Player
+          Destroy(col.gameObject);
+        }
+      }
+    }
 }
