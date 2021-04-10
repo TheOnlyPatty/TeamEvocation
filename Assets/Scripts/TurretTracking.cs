@@ -14,6 +14,7 @@ public class TurretTracking : MonoBehaviour
     public GameObject bullet;
     public Transform target;
     public Transform shootPoint;
+    public AudioSource bulletSound;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class TurretTracking : MonoBehaviour
         direction.Normalize();
         GameObject bulletClone;
         bulletClone = Instantiate(bullet, shootPoint.transform.position, shootPoint.transform.rotation); // as GameObject;
+        bulletSound.Play();
         bulletClone.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         bulletTimer = 0;
       }
