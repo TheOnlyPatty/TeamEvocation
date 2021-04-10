@@ -17125,7 +17125,7 @@ Rigidbody2D:
   m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 6
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -17159,7 +17159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e27551f300321744867884df1ca5953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 20000
+  m_JumpForce: 0
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -17169,6 +17169,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 996292351}
   m_CeilingCheck: {fileID: 1147655830}
   m_CrouchDisableCollider: {fileID: 0}
+  m_Grounded: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -17188,10 +17189,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1360734446}
-  rb: {fileID: 0}
-  runSpeed: 100
-  maxSpeed: 50
-  timeToMax: 2.5
+  rb: {fileID: 1360734444}
+  maxSpeed: 200
+  decelRate: 5
+  accelRate: 11
+  jumpForce: 25000
 --- !u!1 &1548891767
 GameObject:
   m_ObjectHideFlags: 0
