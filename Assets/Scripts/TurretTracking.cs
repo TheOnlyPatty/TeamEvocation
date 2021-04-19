@@ -27,8 +27,9 @@ public class TurretTracking : MonoBehaviour
     {
       RotateGameObject(target.position, 1f, 90f);
 
-      if(currentHealth == 0)
+      if(currentHealth == 0){
         Destroy(gameObject);
+      }
     }
 
     private void RotateGameObject(Vector3 target, float RotationSpeed, float offset)

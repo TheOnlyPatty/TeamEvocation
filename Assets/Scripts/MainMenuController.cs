@@ -3,28 +3,28 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
- 
+
 public class MainMenuController : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject optionsMenu;
 
     public void playGame() {
-        SceneManager.LoadScene("DemoScene");
+        SceneManager.LoadScene("FirstLevel");
     }
- 
-    public void options() 
+
+    public void options()
     {
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
-    public void back() 
+    public void back()
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
     }
- 
+
     public void exitGame() {
         Application.Quit();
     }
