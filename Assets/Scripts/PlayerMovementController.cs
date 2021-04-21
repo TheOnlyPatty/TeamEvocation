@@ -100,7 +100,8 @@ public class PlayerMovementController : MonoBehaviour
             doubleJump = false;
             jump = true;
             jumpTimeCounter = jumpTime;
-            rb.AddForce(new Vector2(0f, initialJumpForce));
+            //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
         }
         
         
@@ -152,7 +153,7 @@ public class PlayerMovementController : MonoBehaviour
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 isJumpCooldown = false;
-                rb.AddForce(new Vector2(0f, doubleJumpForce)); ;
+                rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldown);
         }
         lastTapTimeJump = Time.time;
