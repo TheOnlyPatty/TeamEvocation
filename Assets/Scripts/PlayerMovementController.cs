@@ -17,15 +17,22 @@ public class PlayerMovementController : MonoBehaviour
     bool movingFoward, movingBack;
     public float initialJumpForce;
     public float additionalJumpForce;
+    public float doubleJumpForce;
     public float jumpTime;
     private float jumpTimeCounter;
 
     public float doubleTapThreshold = 0.5f;
+    public float doubleJumpThreshold = 1.5f; 
     private float lastTapTimeRight = 0f;
     private float lastTapTimeLeft = 0f;
+    private float lastTapTimeJump = 0f;
 
     public float dashForce;
-
+    private bool doubleJump;
+    private bool isDashCooldown = true;
+    public float dashCooldown;
+    public float doubleJumpCooldown;
+    private bool isJumpCooldown = true;
 
 
 
@@ -90,10 +97,12 @@ public class PlayerMovementController : MonoBehaviour
         //jump logic
         if (controller.m_Grounded == true && Input.GetButtonDown("Jump"))
         {
+            doubleJump = false;
             jump = true;
             jumpTimeCounter = jumpTime;
             rb.AddForce(new Vector2(0f, initialJumpForce));
         }
+        
         
         
         if (jump && Input.GetKey(KeyCode.Space))
@@ -111,27 +120,42 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jump = false;
+            doubleJump = true;
         }
 
         //dash right
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && isDashCooldown)
         {
             if ((Time.time - lastTapTimeRight) < doubleTapThreshold)
             {
+                isDashCooldown = false;
                 rb.AddForce(new Vector2(dashForce, 0f));
+                Invoke("setDashCooldown", dashCooldown);
             }
             lastTapTimeRight = Time.time;
 
         }
         //dash left
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && isDashCooldown)
         {
             if ((Time.time - lastTapTimeLeft) < doubleTapThreshold)
             {
+                isDashCooldown = false;
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
+                Invoke("setDashCooldown", dashCooldown);
             }
             lastTapTimeLeft = Time.time;
         }
+
+        //double jump
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && isJumpCooldown)
+            if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
+            {
+                isJumpCooldown = false;
+                rb.AddForce(new Vector2(0f, doubleJumpForce)); ;
+                Invoke("setDoubleJumpCooldown", doubleJumpCooldown);
+        }
+        lastTapTimeJump = Time.time;
 
     }
 
@@ -140,4 +164,16 @@ public class PlayerMovementController : MonoBehaviour
         controller.Move(horizontalMove * Time.fixedDeltaTime, false, false);
     }
 
+
+    void setDashCooldown()
+    {
+        isDashCooldown = true;
+    }
+
+    void setDoubleJumpCooldown()
+    {
+        isJumpCooldown = true;
+    }
+
 }
+
