@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VerticalEnemy : MonoBehaviour
 {
@@ -42,8 +43,11 @@ public class VerticalEnemy : MonoBehaviour
           Destroy(gameObject);
         }else{
           // Eventually replace this with damaging the Player
+          SceneManager.LoadScene("Menu");
           Destroy(col.gameObject);
         }
       }
+      moveBy *= -1f;
+      moveUp = !moveUp;
     }
 }

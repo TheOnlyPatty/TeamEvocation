@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HorizontalEnemy : MonoBehaviour
 {
@@ -14,13 +15,10 @@ public class HorizontalEnemy : MonoBehaviour
     void Start()
     {
       rb = GetComponent<Rigidbody2D>();
-      //rb.gravityScale = 0f;
+      rb.gravityScale = 0f;
       basePos = GetComponent<Transform>().position.x;
       moveBy = 3f;
       moveRight = true;
-
-      //temp, change later
-      gameObject.tag = "Player";
     }
 
     // Update is called once per frame
@@ -45,8 +43,11 @@ public class HorizontalEnemy : MonoBehaviour
           Destroy(gameObject);
         }else{
           // Eventually replace this with damaging the Player
+          SceneManager.LoadScene("Menu");
           Destroy(col.gameObject);
         }
       }
+      moveBy *= -1f;
+      moveRight = !moveRight;
     }
 }
