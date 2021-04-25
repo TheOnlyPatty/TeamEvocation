@@ -38,6 +38,7 @@ public class PlayerMovementController : MonoBehaviour
     private float staticMaxSpeed;
     private float staticMaxAirSpeed;
 
+    
 
 
     void Start()
@@ -185,7 +186,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //double jump
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown)
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0; )
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 jumpCooldown = false;
