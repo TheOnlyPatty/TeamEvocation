@@ -10,6 +10,7 @@ public class PlayerMovementController : MonoBehaviour
     bool jump = false;
 
     public float maxSpeed;
+    public float maxAirSpeed;
     public float decelRate;
     public float accelRate;
     float forwardVelocity;
@@ -29,21 +30,45 @@ public class PlayerMovementController : MonoBehaviour
 
     public float dashForce;
     private bool doubleJump;
-    private bool isDashCooldown = true;
-    public float dashCooldown;
-    public float doubleJumpCooldown;
-    private bool isJumpCooldown = true;
+    private bool dashCooldown = true;
+    public float dashCooldownTime;
+    public float doubleJumpCooldownTime;
+    private bool jumpCooldown = true;
+
+    private float staticMaxSpeed;
+    private float staticMaxAirSpeed;
 
 
 
     void Start()
     {
         controller.m_Grounded = false;
+        staticMaxSpeed = maxSpeed;
+        staticMaxAirSpeed = maxAirSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(maxSpeed > staticMaxSpeed)
+        {
+            maxSpeed -= .5f; 
+        }
+        else
+        {
+            maxSpeed = staticMaxSpeed;
+        }
+        if(maxAirSpeed > staticMaxAirSpeed)
+        {
+            maxAirSpeed -= .5f;
+        }
+        else
+        {
+            maxAirSpeed = staticMaxAirSpeed;
+        }
+
+
         inputAxis = Input.GetAxisRaw("Horizontal");
         horizontalMove += inputAxis * accelRate;
 
@@ -60,23 +85,32 @@ public class PlayerMovementController : MonoBehaviour
             movingBack = true;
         }
 
-        if(inputAxis == -1.0f) //max speed check
+        if(inputAxis == -1.0f && controller.m_Grounded && horizontalMove < maxSpeed * -1.0f ) //max speed check while grounded
         {
 
-            if(horizontalMove < maxSpeed * -1.0f)
-            {
-                horizontalMove = maxSpeed * -1.0f;
-            }
+            horizontalMove = maxSpeed * -1.0f;
+            
         }
-        if (inputAxis == 1.0f)
+        if (inputAxis == 1.0f && controller.m_Grounded && horizontalMove > maxSpeed)
         {
-            if(horizontalMove > maxSpeed)
-            {
-                horizontalMove = maxSpeed;
-            }
+            
+            horizontalMove = maxSpeed;
+            
         }
-        //automatically decellerate if neither a or d is pressed.
-        if (inputAxis == 0f)
+
+        if(inputAxis == -1.0f && !controller.m_Grounded && horizontalMove < maxAirSpeed * -1.0f) //max speed check in air
+        {
+            horizontalMove = maxAirSpeed * -1.0f;
+        }
+
+        if (inputAxis == 1.0f && !controller.m_Grounded && horizontalMove > maxAirSpeed)
+        {
+            horizontalMove = maxAirSpeed;
+        }
+
+
+            //automatically decellerate if neither a or d is pressed.
+            if (inputAxis == 0f)
         {
             if (movingFoward)
             {
@@ -125,36 +159,38 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //dash right
-        if (Input.GetKeyDown(KeyCode.D) && isDashCooldown)
+        if (Input.GetKeyDown(KeyCode.D) && dashCooldown)
         {
             if ((Time.time - lastTapTimeRight) < doubleTapThreshold)
             {
-                isDashCooldown = false;
+                dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce, 0f));
-                Invoke("setDashCooldown", dashCooldown);
+                maxSpeed = maxSpeed * 1.5f; 
+                Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeRight = Time.time;
 
         }
         //dash left
-        if (Input.GetKeyDown(KeyCode.A) && isDashCooldown)
+        if (Input.GetKeyDown(KeyCode.A) && dashCooldown)
         {
             if ((Time.time - lastTapTimeLeft) < doubleTapThreshold)
             {
-                isDashCooldown = false;
+                dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
-                Invoke("setDashCooldown", dashCooldown);
+                maxAirSpeed = maxAirSpeed * 1.5f; 
+                Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeLeft = Time.time;
         }
 
         //double jump
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && isJumpCooldown)
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown)
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
-                isJumpCooldown = false;
+                jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
-                Invoke("setDoubleJumpCooldown", doubleJumpCooldown);
+                Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
         }
         lastTapTimeJump = Time.time;
 
@@ -168,12 +204,12 @@ public class PlayerMovementController : MonoBehaviour
 
     void setDashCooldown()
     {
-        isDashCooldown = true;
+        dashCooldown = true;
     }
 
     void setDoubleJumpCooldown()
     {
-        isJumpCooldown = true;
+        jumpCooldown = true;
     }
 
 }
