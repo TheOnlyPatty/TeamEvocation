@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurretTracking : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TurretTracking : MonoBehaviour
     public AudioSource bulletSound;
     private bool iframes;
     private bool playerRight;
+    public bool isBoss;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,13 @@ public class TurretTracking : MonoBehaviour
       RotateGameObject(target.position, 1f, 90f);
 
       if(currentHealth == 0){
+        if(isBoss){
+          if(SceneManager.GetActiveScene().name == "FirstLevel"){
+            SceneManager.LoadScene("SecondLevel");
+          }else if(SceneManager.GetActiveScene().name == "SecondLevel"){
+            SceneManager.LoadScene("ThirdLevel");
+          }
+        }
         Destroy(gameObject);
       }
 
