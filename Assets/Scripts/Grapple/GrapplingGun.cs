@@ -51,6 +51,9 @@ public class GrapplingGun : MonoBehaviour
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
 
+    public AudioSource grappleOffSound;
+    public AudioSource grappleOnSound;
+
     private void Start()
     {
         grappleRope.enabled = false;
@@ -63,12 +66,18 @@ public class GrapplingGun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetGrapplePoint();
+
+            // Grapple Sound
+            grappleOnSound.Play();
         }
         else if (Input.GetKey(KeyCode.Mouse0))
         {
             if (grappleRope.enabled)
             {
                 RotateGun(grapplePoint, false);
+
+                // Grapple Sound
+                grappleOffSound.Play();
             }
             else
             {
