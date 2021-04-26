@@ -186,7 +186,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //double jump
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0; )
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0 )
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 jumpCooldown = false;
