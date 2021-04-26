@@ -5,7 +5,12 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     public CharacterController2D controller;
-    public Rigidbody2D rb; 
+    public Rigidbody2D rb;
+    public ParticleSystem jumpPS;
+    public ParticleSystem dustRightPS;
+    public ParticleSystem dustLeftPS;
+
+
     float horizontalMove = 0f;
     bool jump = false;
 
@@ -136,6 +141,7 @@ public class PlayerMovementController : MonoBehaviour
             jumpTimeCounter = jumpTime;
             //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
+            playJumpPS();
         }
         
         
@@ -165,7 +171,8 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce, 0f));
-                maxSpeed = maxSpeed * 1.5f; 
+                maxSpeed = maxSpeed * 1.5f;
+                dustRightPS.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeRight = Time.time;
@@ -178,7 +185,8 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
-                maxAirSpeed = maxAirSpeed * 1.5f; 
+                maxAirSpeed = maxAirSpeed * 1.5f;
+                dustLeftPS.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeLeft = Time.time;
@@ -190,6 +198,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
+                playJumpPS();
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
         }
         lastTapTimeJump = Time.time;
@@ -210,6 +219,11 @@ public class PlayerMovementController : MonoBehaviour
     void setDoubleJumpCooldown()
     {
         jumpCooldown = true;
+    }
+
+    void playJumpPS()
+    {
+        jumpPS.Play();
     }
 
 }
