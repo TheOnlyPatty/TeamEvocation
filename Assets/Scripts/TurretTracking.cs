@@ -30,6 +30,10 @@ public class TurretTracking : MonoBehaviour
       if(currentHealth == 0){
         Destroy(gameObject);
       }
+
+      if(Vector3.Distance(target.transform.position, transform.position) < 18){
+        Attack();
+      }
     }
 
     private void RotateGameObject(Vector3 target, float RotationSpeed, float offset)
