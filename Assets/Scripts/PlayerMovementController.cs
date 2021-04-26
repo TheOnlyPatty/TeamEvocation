@@ -43,6 +43,10 @@ public class PlayerMovementController : MonoBehaviour
     private float staticMaxSpeed;
     private float staticMaxAirSpeed;
 
+    public AudioSource jumpSound;
+    public AudioSource dashSound;
+
+
 
 
 
@@ -141,6 +145,7 @@ public class PlayerMovementController : MonoBehaviour
             jump = true;
             jumpTimeCounter = jumpTime;
             //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
+            jumpSound.Play();
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
             playJumpPS();
         }
@@ -174,6 +179,7 @@ public class PlayerMovementController : MonoBehaviour
                 rb.AddForce(new Vector2(dashForce, 0f));
                 maxSpeed = maxSpeed * 1.5f;
                 dustRightPS.Play();
+                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeRight = Time.time;
@@ -188,6 +194,7 @@ public class PlayerMovementController : MonoBehaviour
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
                 maxAirSpeed = maxAirSpeed * 1.5f;
                 dustLeftPS.Play();
+                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
             }
             lastTapTimeLeft = Time.time;
@@ -200,6 +207,7 @@ public class PlayerMovementController : MonoBehaviour
                 jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
                 playJumpPS();
+                jumpSound.Play();
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
             }
         lastTapTimeJump = Time.time;
