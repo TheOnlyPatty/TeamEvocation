@@ -5,7 +5,12 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     public CharacterController2D controller;
-    public Rigidbody2D rb; 
+    public Rigidbody2D rb;
+    public ParticleSystem jumpPS;
+    public ParticleSystem dustRightPS;
+    public ParticleSystem dustLeftPS;
+
+
     float horizontalMove = 0f;
     bool jump = false;
 
@@ -38,11 +43,10 @@ public class PlayerMovementController : MonoBehaviour
     private float staticMaxSpeed;
     private float staticMaxAirSpeed;
 
-    
     public AudioSource jumpSound;
     public AudioSource dashSound;
-    
-    
+
+
 
     void Start()
     {
@@ -140,7 +144,9 @@ public class PlayerMovementController : MonoBehaviour
             jumpTimeCounter = jumpTime;
             //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
-            // Jump sound
+
+            playJumpPS();
+
             jumpSound.Play();
         }
         
@@ -153,7 +159,8 @@ public class PlayerMovementController : MonoBehaviour
                 rb.AddForce(new Vector2(0f, additionalJumpForce));
                 jumpTimeCounter -= Time.fixedDeltaTime;
 
-                // Jump sound
+
+
                 jumpSound.Play();
             }
             else if (jumpTimeCounter < 0)
@@ -174,7 +181,9 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce, 0f));
-                maxSpeed = maxSpeed * 1.5f; 
+                maxSpeed = maxSpeed * 1.5f;
+                dustRightPS.Play();
+                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
 
                 // Dash Sound
@@ -190,7 +199,9 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
-                maxAirSpeed = maxAirSpeed * 1.5f; 
+                maxAirSpeed = maxAirSpeed * 1.5f;
+                dustLeftPS.Play();
+                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
 
                 // Dash Sound
@@ -200,12 +211,15 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //double jump
+
         if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0)
         {
+
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
+                playJumpPS();
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
                 // Jump sound
                 jumpSound.Play();
@@ -229,6 +243,11 @@ public class PlayerMovementController : MonoBehaviour
     void setDoubleJumpCooldown()
     {
         jumpCooldown = true;
+    }
+
+    void playJumpPS()
+    {
+        jumpPS.Play();
     }
 
 }
