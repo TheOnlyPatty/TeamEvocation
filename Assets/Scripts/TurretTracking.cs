@@ -15,6 +15,7 @@ public class TurretTracking : MonoBehaviour
     public Transform target;
     public Transform shootPoint;
     public AudioSource bulletSound;
+    public Health playerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -56,12 +57,12 @@ public class TurretTracking : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
         if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 0){
-          //Destroy(gameObject);
-          currentHealth--;
+                //Destroy(gameObject);
+                currentHealth--;
         }else{
-          // Eventually replace this with damaging the Player
-          Destroy(col.gameObject);
-        }
+                // Eventually replace this with damaging the Player
+                Destroy(col.gameObject);
+            }
       }
     }
 }
