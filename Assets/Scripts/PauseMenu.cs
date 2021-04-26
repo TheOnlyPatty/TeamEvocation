@@ -23,6 +23,16 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            LoadMenu();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            QuitGame();
+        }
     }
 
    public void Resume()
@@ -49,4 +59,5 @@ public class PauseMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
 }
