@@ -17,6 +17,7 @@ public class DogBoss : MonoBehaviour
     public float bulletSpeed;
     private float timer;
     private float timer2;
+    private bool iframes;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class DogBoss : MonoBehaviour
       rb = GetComponent<Rigidbody2D>();
       moveRight = false;
       jumping = false;
+      iframes = false;
       maxHealth = 3f;
       currentHealth = maxHealth;
     }
@@ -140,8 +142,14 @@ public class DogBoss : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
-        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+        if(!iframes && col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
           currentHealth--;
+          iframes = true;
+          if(playerRight)
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(70000f, 30000f));
+          else if(!playerRight)
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-70000f, 30000f));
+          StartCoroutine(IFrames());
         }else{
           // Eventually replace this with damaging the Player
           Destroy(col.gameObject);
@@ -154,5 +162,13 @@ public class DogBoss : MonoBehaviour
     IEnumerator switchDir(){
       yield return new WaitForSecondsRealtime(0.3f);
       moveRight = !moveRight;
+      transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+    }
+
+    IEnumerator IFrames(){
+      GetComponent<SpriteRenderer>().color = Color.red;
+      yield return new WaitForSecondsRealtime(1f);
+      GetComponent<SpriteRenderer>().color = Color.white;
+      iframes = false;
     }
 }

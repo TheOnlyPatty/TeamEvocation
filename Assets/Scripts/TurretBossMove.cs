@@ -58,19 +58,19 @@ public class TurretBossMove : MonoBehaviour
       if(col.gameObject.tag != "Player"){
         if(!moveRight && !moveUp){
           moveUp = !moveUp;
-          ts.position = new Vector2(ts.position.x + 0.3f, ts.position.y);
+          ts.position = new Vector2(ts.position.x + 0.4f, ts.position.y);
         }
         else if(!moveRight && moveUp){
           moveRight = !moveRight;
-          ts.position = new Vector2(ts.position.x, ts.position.y - 0.3f);
+          ts.position = new Vector2(ts.position.x, ts.position.y - 0.4f);
         }
         else if(moveRight && moveUp){
           moveUp = !moveUp;
-          ts.position = new Vector2(ts.position.x - 0.3f, ts.position.y);
+          ts.position = new Vector2(ts.position.x - 0.4f, ts.position.y);
         }
         else if(moveRight && !moveUp){
           moveRight = !moveRight;
-          ts.position = new Vector2(ts.position.x, ts.position.y + 0.3f);
+          ts.position = new Vector2(ts.position.x, ts.position.y + 0.4f);
         }
         pointAtPlayer = turret.target.transform.position - transform.position;
       }

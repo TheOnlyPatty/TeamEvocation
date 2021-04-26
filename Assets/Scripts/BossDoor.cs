@@ -22,8 +22,9 @@ public class BossDoor : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col){
-      if(col.isTrigger == false && col.CompareTag("Player"))
+      if(col.isTrigger == false && col.CompareTag("Player")){
         door.enabled = true;
         mapRender.enabled = true;
+      }
     }
 }
