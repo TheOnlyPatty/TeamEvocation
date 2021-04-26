@@ -18,6 +18,7 @@ public class DogBoss : MonoBehaviour
     private float timer;
     private float timer2;
     private bool iframes;
+    private bool started;
 
     // Start is called before the first frame update
     void Start()
@@ -28,33 +29,36 @@ public class DogBoss : MonoBehaviour
       iframes = false;
       maxHealth = 3f;
       currentHealth = maxHealth;
+      started = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-      if(!jumping){
-        RunAround();
-      }
-
-      if(currentHealth < 3){
-        timer += Time.deltaTime;
-        if(!jumping && timer > 5f){
-          Jump();
-          timer = 0f;
+      if(started){
+        if(!jumping){
+          RunAround();
         }
-      }
 
-      if(currentHealth < 2){
-        timer2 += Time.deltaTime;
-        if(timer2 > 2.5f){
-          OmniAttack();
-          timer2 = 0f;
+        if(currentHealth < 3){
+          timer += Time.deltaTime;
+          if(!jumping && timer > 5f){
+            Jump();
+            timer = 0f;
+          }
         }
-      }
 
-      if(currentHealth == 0){
-        Destroy(gameObject);
+        if(currentHealth < 2){
+          timer2 += Time.deltaTime;
+          if(timer2 > 2.5f){
+            OmniAttack();
+            timer2 = 0f;
+          }
+        }
+
+        if(currentHealth == 0){
+          Destroy(gameObject);
+        }
       }
     }
 
@@ -99,7 +103,7 @@ public class DogBoss : MonoBehaviour
       Vector2 direction = target.transform.position - transform.position;
       direction.Normalize();
       GameObject bulletClone;
-      bulletClone = Instantiate(bullet, new Vector2(transform.position.x, transform.position.y) + direction * 2, transform.rotation); // as GameObject;
+      bulletClone = Instantiate(bullet, new Vector2(transform.position.x, transform.position.y) + direction * 3, transform.rotation); // as GameObject;
       bulletClone.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
     }
 
@@ -108,11 +112,11 @@ public class DogBoss : MonoBehaviour
       direction.Normalize();
       // Right
       GameObject bulletRight;
-      bulletRight = Instantiate(bullet, new Vector2(transform.position.x + 2f, transform.position.y), transform.rotation);
+      bulletRight = Instantiate(bullet, new Vector2(transform.position.x + 3f, transform.position.y), transform.rotation);
       bulletRight.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed, 0f);
       // Left
       GameObject bulletLeft;
-      bulletLeft = Instantiate(bullet, new Vector2(transform.position.x - 2f, transform.position.y), transform.rotation);
+      bulletLeft = Instantiate(bullet, new Vector2(transform.position.x - 3f, transform.position.y), transform.rotation);
       bulletLeft.GetComponent<Rigidbody2D>().velocity = new Vector2(-bulletSpeed, 0f);
       // Up
       GameObject bulletUp;
@@ -170,5 +174,10 @@ public class DogBoss : MonoBehaviour
       yield return new WaitForSecondsRealtime(1f);
       GetComponent<SpriteRenderer>().color = Color.white;
       iframes = false;
+    }
+
+    public void setStarted(){
+      started = true;
+      GetComponent<Animator>().enabled = true;
     }
 }
