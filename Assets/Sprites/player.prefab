@@ -15361,7 +15361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7781192421085088258}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.43, y: 1.04, z: 0}
+  m_LocalPosition: {x: 1.67, y: 1.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4655555530347353269}
@@ -15613,7 +15613,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 6.4634547
+  m_Distance: 30.765385
   m_DampingRatio: 1
   m_Frequency: 1
 --- !u!114 &1430678501
@@ -15636,6 +15636,7 @@ MonoBehaviour:
   - {fileID: 8560526701585562814}
   fullHeart: {fileID: 21300000, guid: 9b1c3f03f9adef347bc09b04c7640cd4, type: 3}
   emptyHeart: {fileID: 21300000, guid: 68e8ed481ecb3bb45a3777c91cd696e2, type: 3}
+  damageNoise: {fileID: 0}
 --- !u!82 &1691777199
 AudioSource:
   m_ObjectHideFlags: 0
