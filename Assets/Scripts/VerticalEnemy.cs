@@ -42,10 +42,9 @@ public class VerticalEnemy : MonoBehaviour
         if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
           Destroy(gameObject);
         }else{
-          // Eventually replace this with damaging the Player
-          SceneManager.LoadScene("Menu");
-          Destroy(col.gameObject);
-        }
+                // Eventually replace this with damaging the Player
+                col.gameObject.GetComponent<Health>().takeDamage();
+            }
       }
       moveBy *= -1f;
       moveUp = !moveUp;

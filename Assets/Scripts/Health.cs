@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class Health : MonoBehaviour 
 {
@@ -46,7 +47,18 @@ public class Health : MonoBehaviour
             {
                 hearts[i].enabled = false;
             }
+
         }
+        if (health == 0)
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    public void takeDamage()
+    {
+        health--;
     }
 
 
