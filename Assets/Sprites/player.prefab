@@ -170,6 +170,7 @@ MonoBehaviour:
   controller: {fileID: 8315259420724230430}
   rb: {fileID: 8315259420724230428}
   maxSpeed: 200
+  maxAirSpeed: 0
   decelRate: 5
   accelRate: 11
   initialJumpForce: 15000
@@ -179,8 +180,10 @@ MonoBehaviour:
   doubleTapThreshold: 0.3
   doubleJumpThreshold: 1.5
   dashForce: 40000
-  dashCooldown: 0
-  doubleJumpCooldown: 0
+  dashCooldownTime: 0
+  doubleJumpCooldownTime: 0
+  jumpSound: {fileID: 0}
+  dashSound: {fileID: 0}
 --- !u!114 &8315259420724230430
 MonoBehaviour:
   m_ObjectHideFlags: 0
