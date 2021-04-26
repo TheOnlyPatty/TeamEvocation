@@ -5,13 +5,14 @@ using UnityEngine;
 public class TurretBossMove : MonoBehaviour
 {
 
-    public bool moveRight;
-    public bool moveUp;
+    private bool moveRight;
+    private bool moveUp;
     private Rigidbody2D rb;
     private Transform ts;
     private TurretTracking turret;
     public float moveBy;
     private Vector2 pointAtPlayer;
+    private bool started;
 
     // Start is called before the first frame update
     void Start()
@@ -22,35 +23,38 @@ public class TurretBossMove : MonoBehaviour
       rb.gravityScale = 0f;
       moveRight = false;
       moveUp = false;
+      started = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-      if(turret.currentHealth > (turret.maxHealth / 2)){
-        if(!moveRight && !moveUp){
-          // Go Left
-          rb.velocity = new Vector2(-moveBy, 0f);
-        }
+      if(started){
+        if(turret.currentHealth > (turret.maxHealth / 2)){
+          if(!moveRight && !moveUp){
+            // Go Left
+            rb.velocity = new Vector2(-moveBy, 0f);
+          }
 
-        if(!moveRight && moveUp){
-          // Go Up
-          rb.velocity = new Vector2(0f, moveBy);
-        }
+          if(!moveRight && moveUp){
+            // Go Up
+            rb.velocity = new Vector2(0f, moveBy);
+          }
 
-        if(moveRight && moveUp){
-          // Go Right
-          rb.velocity = new Vector2(moveBy, 0f);
-        }
+          if(moveRight && moveUp){
+            // Go Right
+            rb.velocity = new Vector2(moveBy, 0f);
+          }
 
-        if(moveRight && !moveUp){
-          // Go Down
-          rb.velocity = new Vector2(0f, -moveBy);
+          if(moveRight && !moveUp){
+            // Go Down
+            rb.velocity = new Vector2(0f, -moveBy);
+          }
+        }else{
+          pointAtPlayer.Normalize();
+          pointAtPlayer *= moveBy;
+          rb.velocity = pointAtPlayer;
         }
-      }else{
-        pointAtPlayer.Normalize();
-        pointAtPlayer *= moveBy;
-        rb.velocity = pointAtPlayer;
       }
     }
 
@@ -74,5 +78,9 @@ public class TurretBossMove : MonoBehaviour
         }
         pointAtPlayer = turret.target.transform.position - transform.position;
       }
+    }
+
+    public void setStarted(){
+      started = true;
     }
 }

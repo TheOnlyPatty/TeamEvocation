@@ -15,11 +15,14 @@ public class TurretTracking : MonoBehaviour
     public Transform target;
     public Transform shootPoint;
     public AudioSource bulletSound;
+    private bool iframes;
+    private bool playerRight;
 
     // Start is called before the first frame update
     void Start()
     {
       currentHealth = maxHealth;
+      iframes = false;
     }
 
     // Update is called once per frame
@@ -33,6 +36,14 @@ public class TurretTracking : MonoBehaviour
 
       if(Vector3.Distance(target.transform.position, transform.position) < 18){
         Attack();
+      }
+
+      if(target.transform.position.x < transform.position.x && playerRight){
+        playerRight = false;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+      }else if(target.transform.position.x > transform.position.x && !playerRight){
+        playerRight = true;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
       }
     }
 
@@ -61,10 +72,19 @@ public class TurretTracking : MonoBehaviour
       if(col.gameObject.tag == "Player"){
         if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 0){
           currentHealth--;
+          iframes = true;
+          StartCoroutine(IFrames());
         }else{
           // Eventually replace this with damaging the Player
           Destroy(col.gameObject);
         }
       }
+    }
+
+    IEnumerator IFrames(){
+      GetComponent<SpriteRenderer>().color = Color.red;
+      yield return new WaitForSecondsRealtime(1f);
+      GetComponent<SpriteRenderer>().color = Color.white;
+      iframes = false;
     }
 }

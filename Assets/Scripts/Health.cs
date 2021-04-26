@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour 
+public class Health : MonoBehaviour
 {
     //Int for player health and number of hearts
     public int health;
@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
-    
+
 
     private void Update()
     {
@@ -49,7 +49,7 @@ public class Health : MonoBehaviour
             }
 
         }
-        if (health == 0)
+        if (health <= 0)
         {
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -29,11 +29,13 @@ public class HorizontalEnemy : MonoBehaviour
       if(GetComponent<Transform>().position.x > (basePos + 5) && moveRight){
         moveBy *= -1f;
         moveRight = false;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
       }
 
       if(GetComponent<Transform>().position.x < (basePos - 5) && !moveRight){
         moveBy *= -1f;
         moveRight = true;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
       }
     }
 
@@ -42,11 +44,11 @@ public class HorizontalEnemy : MonoBehaviour
         if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
           Destroy(gameObject);
         }else{
-                // Eventually replace this with damaging the Player
-                col.gameObject.GetComponent<Health>().takeDamage();
-            }
+          col.gameObject.GetComponent<Health>().takeDamage();
+        }
       }
       moveBy *= -1f;
       moveRight = !moveRight;
+      transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
     }
 }
