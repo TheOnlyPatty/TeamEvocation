@@ -28,7 +28,7 @@ public class PlayerMovementController : MonoBehaviour
     private float jumpTimeCounter;
 
     public float doubleTapThreshold = 0.5f;
-    public float doubleJumpThreshold = 1.5f; 
+    public float doubleJumpThreshold = 1.5f;
     private float lastTapTimeRight = 0f;
     private float lastTapTimeLeft = 0f;
     private float lastTapTimeJump = 0f;
@@ -43,8 +43,6 @@ public class PlayerMovementController : MonoBehaviour
     private float staticMaxSpeed;
     private float staticMaxAirSpeed;
 
-    public AudioSource jumpSound;
-    public AudioSource dashSound;
 
 
 
@@ -59,15 +57,15 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
 
-        if(maxSpeed > staticMaxSpeed)
+        if (maxSpeed > staticMaxSpeed)
         {
-            maxSpeed -= .5f; 
+            maxSpeed -= .5f;
         }
         else
         {
             maxSpeed = staticMaxSpeed;
         }
-        if(maxAirSpeed > staticMaxAirSpeed)
+        if (maxAirSpeed > staticMaxAirSpeed)
         {
             maxAirSpeed -= .5f;
         }
@@ -80,33 +78,33 @@ public class PlayerMovementController : MonoBehaviour
         inputAxis = Input.GetAxisRaw("Horizontal");
         horizontalMove += inputAxis * accelRate;
 
-        if(rb.velocity.x > 0f) //decel bools using the rb.velocity so we know which direction we need to decelerate
+        if (rb.velocity.x > 0f) //decel bools using the rb.velocity so we know which direction we need to decelerate
         {
 
             movingFoward = true;
             movingBack = false;
         }
-        if(rb.velocity.x < 0f)
+        if (rb.velocity.x < 0f)
         {
 
             movingFoward = false;
             movingBack = true;
         }
 
-        if(inputAxis == -1.0f && controller.m_Grounded && horizontalMove < maxSpeed * -1.0f ) //max speed check while grounded
+        if (inputAxis == -1.0f && controller.m_Grounded && horizontalMove < maxSpeed * -1.0f) //max speed check while grounded
         {
 
             horizontalMove = maxSpeed * -1.0f;
-            
+
         }
         if (inputAxis == 1.0f && controller.m_Grounded && horizontalMove > maxSpeed)
         {
-            
+
             horizontalMove = maxSpeed;
-            
+
         }
 
-        if(inputAxis == -1.0f && !controller.m_Grounded && horizontalMove < maxAirSpeed * -1.0f) //max speed check in air
+        if (inputAxis == -1.0f && !controller.m_Grounded && horizontalMove < maxAirSpeed * -1.0f) //max speed check in air
         {
             horizontalMove = maxAirSpeed * -1.0f;
         }
@@ -117,23 +115,23 @@ public class PlayerMovementController : MonoBehaviour
         }
 
 
-            //automatically decellerate if neither a or d is pressed.
-            if (inputAxis == 0f)
+        //automatically decellerate if neither a or d is pressed.
+        if (inputAxis == 0f)
         {
             if (movingFoward)
             {
                 horizontalMove -= decelRate;
                 horizontalMove = Mathf.Max(horizontalMove, 0);
-               
+
             }
             else if (movingBack)
             {
                 horizontalMove += decelRate;
                 horizontalMove = Mathf.Min(horizontalMove, 0);
-               
+
             }
-            
-            
+
+
         }
 
         //jump logic
@@ -144,24 +142,17 @@ public class PlayerMovementController : MonoBehaviour
             jumpTimeCounter = jumpTime;
             //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
-
             playJumpPS();
-
-            jumpSound.Play();
         }
-        
-        
-        
+
+
+
         if (jump && Input.GetKey(KeyCode.Space))
         {
             if (jumpTimeCounter > 0)
             {
                 rb.AddForce(new Vector2(0f, additionalJumpForce));
                 jumpTimeCounter -= Time.fixedDeltaTime;
-
-
-
-                jumpSound.Play();
             }
             else if (jumpTimeCounter < 0)
             {
@@ -183,11 +174,7 @@ public class PlayerMovementController : MonoBehaviour
                 rb.AddForce(new Vector2(dashForce, 0f));
                 maxSpeed = maxSpeed * 1.5f;
                 dustRightPS.Play();
-                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
-
-                // Dash Sound
-                dashSound.Play();
             }
             lastTapTimeRight = Time.time;
 
@@ -201,30 +188,20 @@ public class PlayerMovementController : MonoBehaviour
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
                 maxAirSpeed = maxAirSpeed * 1.5f;
                 dustLeftPS.Play();
-                dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
-
-                // Dash Sound
-                dashSound.Play();
             }
             lastTapTimeLeft = Time.time;
         }
 
         //double jump
-
         if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0)
-        {
-
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
                 playJumpPS();
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
-                // Jump sound
-                jumpSound.Play();
             }
-        }
         lastTapTimeJump = Time.time;
 
     }
@@ -251,4 +228,3 @@ public class PlayerMovementController : MonoBehaviour
     }
 
 }
-
