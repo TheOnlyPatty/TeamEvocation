@@ -16,6 +16,7 @@ public class TurretTracking : MonoBehaviour
     public Transform target;
     public Transform shootPoint;
     public AudioSource bulletSound;
+    public AudioSource scrapSound;
     private bool iframes;
     private bool playerRight;
     public bool isBoss;
@@ -40,6 +41,7 @@ public class TurretTracking : MonoBehaviour
             SceneManager.LoadScene("ThirdLevel");
           }
         }
+        scrapSound.Play();
         Destroy(gameObject);
       }
 

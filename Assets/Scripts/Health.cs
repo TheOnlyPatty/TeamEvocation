@@ -15,6 +15,8 @@ public class Health : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
+    public AudioSource damageNoise;
+
 
 
     private void Update()
@@ -59,6 +61,7 @@ public class Health : MonoBehaviour
     public void takeDamage()
     {
         health--;
+        damageNoise.Play();
     }
 
 

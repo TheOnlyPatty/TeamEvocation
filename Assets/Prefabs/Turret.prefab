@@ -135,6 +135,7 @@ MonoBehaviour:
   target: {fileID: 0}
   shootPoint: {fileID: 2307702121741719065}
   bulletSound: {fileID: 2307702121827375047}
+  isBoss: 0
 --- !u!82 &2307702121827375047
 AudioSource:
   m_ObjectHideFlags: 0
@@ -144,7 +145,8 @@ AudioSource:
   m_GameObject: {fileID: 2307702121827375040}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8771687666213262722, guid: b1abe6847ae8da74980d78e67645a4e1,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: bd699da90b5454b92a9025d9650edee6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.04

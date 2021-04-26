@@ -10,6 +10,7 @@ public class VerticalEnemy : MonoBehaviour
     private float basePos;
     private float moveBy;
     private bool moveUp;
+    public AudioSource scrapSound;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class VerticalEnemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
         if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+          scrapSound.Play();
           Destroy(gameObject);
         }else{
                 // Eventually replace this with damaging the Player
