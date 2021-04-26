@@ -156,8 +156,7 @@ public class DogBoss : MonoBehaviour
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-70000f, 30000f));
           StartCoroutine(IFrames());
         }else{
-          // Eventually replace this with damaging the Player
-          Destroy(col.gameObject);
+          col.gameObject.GetComponent<Health>().takeDamage();
         }
       }else{
         jumping = false;
