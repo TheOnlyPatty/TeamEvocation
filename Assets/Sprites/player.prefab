@@ -14839,7 +14839,9 @@ MonoBehaviour:
   dustRightPS: {fileID: 1596488493329600023}
   dustLeftPS: {fileID: 426377787642611776}
   maxSpeed: 200
+
   maxAirSpeed: 200
+
   decelRate: 5
   accelRate: 11
   initialJumpForce: 15
@@ -14848,9 +14850,11 @@ MonoBehaviour:
   jumpTime: 0.3
   doubleTapThreshold: 0.3
   doubleJumpThreshold: 1.5
+
   dashForce: 70000
   dashCooldownTime: 3
   doubleJumpCooldownTime: 1.2
+
 --- !u!114 &8315259420724230430
 MonoBehaviour:
   m_ObjectHideFlags: 0

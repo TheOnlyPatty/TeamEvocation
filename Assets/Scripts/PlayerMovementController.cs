@@ -47,6 +47,7 @@ public class PlayerMovementController : MonoBehaviour
     public AudioSource dashSound;
 
 
+
     void Start()
     {
         controller.m_Grounded = false;
@@ -143,7 +144,9 @@ public class PlayerMovementController : MonoBehaviour
             jumpTimeCounter = jumpTime;
             //rb.AddForce(new Vector2(0f, initialJumpForce), ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
+
             playJumpPS();
+
             jumpSound.Play();
         }
         
@@ -155,6 +158,8 @@ public class PlayerMovementController : MonoBehaviour
             {
                 rb.AddForce(new Vector2(0f, additionalJumpForce));
                 jumpTimeCounter -= Time.fixedDeltaTime;
+
+
 
                 jumpSound.Play();
             }
@@ -180,6 +185,9 @@ public class PlayerMovementController : MonoBehaviour
                 dustRightPS.Play();
                 dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
+
+                // Dash Sound
+                dashSound.Play();
             }
             lastTapTimeRight = Time.time;
 
@@ -195,18 +203,27 @@ public class PlayerMovementController : MonoBehaviour
                 dustLeftPS.Play();
                 dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
+
+                // Dash Sound
+                dashSound.Play();
             }
             lastTapTimeLeft = Time.time;
         }
 
         //double jump
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0 )
+
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump == true && jumpCooldown && doubleJumpForce > 0)
+        {
+
             if ((Time.time - lastTapTimeJump) < doubleJumpThreshold)
             {
                 jumpCooldown = false;
                 rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
                 playJumpPS();
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
+                // Jump sound
+                jumpSound.Play();
+            }
         }
         lastTapTimeJump = Time.time;
 
