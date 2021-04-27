@@ -147,7 +147,7 @@ public class DogBoss : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
-        if(!iframes && col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 8){
+        if(!iframes && col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 5f){
           currentHealth--;
           iframes = true;
           if(playerRight)

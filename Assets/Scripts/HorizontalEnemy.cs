@@ -12,6 +12,7 @@ public class HorizontalEnemy : MonoBehaviour
     private bool moveRight;
     public AudioSource scrapSound;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +43,7 @@ public class HorizontalEnemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
-        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 8){
+        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 7){
           scrapSound.Play();
           Destroy(gameObject);
         }else{

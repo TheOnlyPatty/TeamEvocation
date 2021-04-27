@@ -81,7 +81,7 @@ public class TurretTracking : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
-        if(!iframes && col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+        if(!iframes && col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 0f){
           currentHealth--;
           iframes = true;
           StartCoroutine(IFrames());
