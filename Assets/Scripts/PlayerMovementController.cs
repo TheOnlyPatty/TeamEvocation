@@ -177,7 +177,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce, 0f));
-                maxSpeed = maxSpeed * 1.5f;
+                
                 dustRightPS.Play();
                 dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
@@ -192,7 +192,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 dashCooldown = false;
                 rb.AddForce(new Vector2(dashForce * -1.0f, 0f));
-                maxAirSpeed = maxAirSpeed * 1.5f;
+                
                 dustLeftPS.Play();
                 dashSound.Play();
                 Invoke("setDashCooldown", dashCooldownTime);
@@ -211,6 +211,8 @@ public class PlayerMovementController : MonoBehaviour
                 Invoke("setDoubleJumpCooldown", doubleJumpCooldownTime);
             }
         lastTapTimeJump = Time.time;
+
+        
 
     }
 
