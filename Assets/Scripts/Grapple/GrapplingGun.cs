@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// all credit for this script that we modified goes to https://github.com/PizzaDestroyerX/Unity-Mehcnaics
 public class GrapplingGun : MonoBehaviour
 {
    

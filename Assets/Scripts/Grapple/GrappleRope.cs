@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//all credit for this scipt that we modified goes to https://github.com/PizzaDestroyerX/Unity-Mehcnaics
 public class GrappleRope : MonoBehaviour
 {
     [Header("General Refernces:")]
