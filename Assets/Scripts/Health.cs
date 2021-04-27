@@ -17,10 +17,14 @@ public class Health : MonoBehaviour
 
     public AudioSource damageNoise;
 
+    public float velocity;
+
 
 
     private void Update()
     {
+      velocity = GetComponent<Rigidbody2D>().velocity.magnitude;
+
         //for each heart in the array of sprites
         for (int i = 0; i < hearts.Length; i++)
 

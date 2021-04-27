@@ -40,7 +40,7 @@ public class VerticalEnemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
       if(col.gameObject.tag == "Player"){
-        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 1){
+        if(col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude > 8){
           scrapSound.Play();
           Destroy(gameObject);
         }else{
