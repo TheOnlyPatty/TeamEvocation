@@ -8,9 +8,18 @@ public class MainMenuController : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject optionsMenu;
+    public GameObject introText;
+    private bool readyGo;
+
+    void Update(){
+      if(readyGo && Input.anyKey){
+        SceneManager.LoadScene("FirstLevel");
+      }
+    }
 
     public void playGame() {
-        SceneManager.LoadScene("FirstLevel");
+        introText.SetActive(true);
+        readyGo = true;
     }
 
     public void options()
